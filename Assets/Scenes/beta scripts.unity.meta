@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/beta scripts.unity.meta
 guid: 35167307bf0dcc64cba65b831f047f5a
 DefaultImporter:
+========
+guid: 38135711a6d4e224987c364645f3a0eb
+PrefabImporter:
+>>>>>>>> main:Assets/Prefabs/Goose.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
