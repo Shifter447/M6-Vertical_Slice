@@ -1,97 +1,26 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CameraZoom : MonoBehaviour
 {
-    [Header("Zoom Settings")]
-    public float zoomSpeed = 5f;
-    public float minZoom = 3f;
-    public float maxZoom = 12f;
+    private float zoom;
+    private float zoomMultiplier = 4f;
+    private float minZoom = 2f;
+    private float maxZoom = 8f;
+    private float velocity = 0f;
+    private float smoothTime = 0.25f;
 
-    [Header("Focus Mode")]
-    public bool enableFocusMode = true;
-    public float focusZoom = 4f;
-    public float focusSpeed = 6f;
+    [SerializeField] private Camera cam;
 
-    private Camera cam;
-    private float targetZoom;
-
-    private InputAction focusAction;
-    private InputAction scrollAction;
-
-    void OnEnable()
+    private void Start()
     {
-        scrollAction = new InputAction(
-            type: InputActionType.Value,
-            binding: "<Mouse>/scroll"
-        );
-        scrollAction.Enable();
-
-        focusAction = new InputAction(
-            type: InputActionType.Button,
-            binding: "<Keyboard>/leftShift"
-        );
-        focusAction.Enable();
+        zoom = cam.orthographicSize;
     }
 
-    void OnDisable()
+    private void Update()
     {
-        scrollAction.Disable();
-        focusAction.Disable();
-    }
-
-    void Start()
-    {
-        cam = GetComponent<Camera>();
-        targetZoom = cam.orthographic ? cam.orthographicSize : cam.fieldOfView;
-    }
-
-    void Update()
-    {
-        HandleScrollZoom();
-        HandleFocusMode();
-        ApplyZoom();
-    }
-
-    void HandleScrollZoom()
-    {
-        Vector2 scroll = scrollAction.ReadValue<Vector2>();
-        float scrollDelta = scroll.y * 0.01f;
-
-        if (Mathf.Abs(scrollDelta) > 0.001f)
-        {
-            targetZoom -= scrollDelta * zoomSpeed;
-            targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
-        }
-    }
-
-    void HandleFocusMode()
-    {
-        if (!enableFocusMode) return;
-
-        if (focusAction.IsPressed())
-        {
-            targetZoom = Mathf.Lerp(targetZoom, focusZoom, Time.deltaTime * focusSpeed);
-        }
-    }
-
-    void ApplyZoom()
-    {
-        if (cam.orthographic)
-        {
-            cam.orthographicSize = Mathf.Lerp(
-                cam.orthographicSize,
-                targetZoom,
-                Time.deltaTime * zoomSpeed
-            );
-        }
-        else
-        {
-            cam.fieldOfView = Mathf.Lerp(
-                cam.fieldOfView,
-                targetZoom,
-                Time.deltaTime * zoomSpeed
-            );
-        }
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        zoom -= scroll * zoomMultiplier;
+        zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
+        cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, zoom, ref velocity, smoothTime);
     }
 }
