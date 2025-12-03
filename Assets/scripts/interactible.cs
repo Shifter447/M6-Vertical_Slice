@@ -1,30 +1,63 @@
 using UnityEngine;
+using UnityEngine.Events;
 
-public class Interactable : MonoBehaviour
+public class ClickInteractable : MonoBehaviour
 {
-    public float interactDistance = 3f;
-    public Transform player; 
-    public GameObject prompt; // The child canvas / icon
+    [Header("Interaction Settings")]
+    public float interactRange = 2f;
+    public Transform player;
 
-    void Start()
-    {
-        if (prompt != null)
-            prompt.SetActive(false);
-    }
+    [Tooltip("Leave empty to allow clicking on any layer.")]
+    public LayerMask clickLayers = ~0;
+
+    public UnityEvent onInteract;
 
     void Update()
     {
-        float dist = Vector3.Distance(player.position, transform.position);
+        if (Input.GetMouseButtonDown(0))
+            TryInteract();
+    }
 
-        if (dist <= interactDistance)
+    void TryInteract()
+    {
+        if (player == null)
         {
-            if (!prompt.activeSelf)
-                prompt.SetActive(true);
+            Debug.LogWarning($"{name}: No player assigned!");
+            return;
         }
-        else
+
+        // 1. Range check
+        float dist = Vector3.Distance(player.position, transform.position);
+        if (dist > interactRange)
         {
-            if (prompt.activeSelf)
-                prompt.SetActive(false);
+            Debug.Log($"{name}: Player too far ({dist:F1} > {interactRange})");
+            return;
         }
+
+        // 2. Raycast from camera
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (!Physics.Raycast(ray, out RaycastHit hit, 200f, clickLayers))
+        {
+            Debug.Log($"{name}: Raycast hit nothing.");
+            return;
+        }
+
+        // 3. Ensure the clicked object is THIS one
+        if (hit.collider.gameObject != gameObject)
+        {
+            Debug.Log($"{name}: Raycast hit {hit.collider.name}, not this object.");
+            return;
+        }
+
+        Debug.Log($"{name}: Interacted!");
+        onInteract?.Invoke();
+    }
+
+    // Gizmo to visualize interaction range
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, interactRange);
     }
 }
