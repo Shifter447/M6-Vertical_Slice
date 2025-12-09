@@ -3,34 +3,34 @@ using UnityEngine;
 public class PlayerCarry : MonoBehaviour
 {
     public float interactDistance = 2f;
-    public Transform carryPoint;            // assign in Inspector
+    public Transform carryPoint;
     public LayerMask interactLayer;
 
     private Transform carriedObject;
 
     void Update()
     {
+        // Right-click toggles pick up / drop
         if (Input.GetMouseButtonDown(1))
         {
-            TryPickUp();
-        }
-
-        if (Input.GetMouseButtonUp(1))
-        {
-            Drop();
+            if (carriedObject == null)
+                TryPickUp();
+            else
+                Drop();
         }
     }
 
     void TryPickUp()
     {
-        if (carriedObject != null) return;
+        // Prevent picking up while drag script is holding something
+        GooseDrag drag = GetComponent<GooseDrag>();
+        if (drag != null && drag.GetGrabbedRigidbody() != null)
+            return;
 
-        // Check for nearby objects
         Collider[] hits = Physics.OverlapSphere(transform.position, interactDistance, interactLayer);
-
         if (hits.Length == 0) return;
 
-        // Pick the closest object
+        // Find nearest interactable object
         Collider nearest = hits[0];
         float bestDist = Vector3.Distance(transform.position, nearest.transform.position);
 
@@ -54,7 +54,7 @@ public class PlayerCarry : MonoBehaviour
             rb.isKinematic = true;
         }
 
-        // Parent to pivot
+        // Snap into hand / beak position
         carriedObject.SetParent(carryPoint);
         carriedObject.localPosition = Vector3.zero;
         carriedObject.localRotation = Quaternion.identity;
@@ -64,7 +64,6 @@ public class PlayerCarry : MonoBehaviour
     {
         if (carriedObject == null) return;
 
-        // Re-enable physics
         Rigidbody rb = carriedObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -72,12 +71,10 @@ public class PlayerCarry : MonoBehaviour
             rb.isKinematic = false;
         }
 
-        // Unparent
         carriedObject.SetParent(null);
         carriedObject = null;
     }
 
-    // Visualize distance in Scene view
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
