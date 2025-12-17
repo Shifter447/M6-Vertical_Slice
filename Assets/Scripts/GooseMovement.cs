@@ -9,7 +9,7 @@ public class GooseMovement : MonoBehaviour
 
     [Header("Movement Settings")]
     public float moveSpeed = 10f;
-    public float runMultiplier = 1.7f;   // ★ How fast running is
+    public float runMultiplier = 1.7f;   
 
     [Header("Input Setting")]
     [SerializeField] float sampleDistance = 0.5f;
@@ -31,7 +31,7 @@ public class GooseMovement : MonoBehaviour
 
     void Update()
     {
-        // Movement input
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -46,11 +46,11 @@ public class GooseMovement : MonoBehaviour
             }
         }
 
-        // ★ HOLD to run
+    
         bool isRunning = Input.GetMouseButton(0);
         float runSpeed = isRunning ? baseSpeed * runMultiplier : baseSpeed;
 
-        // Apply slowdown from dragging weight
+
         float weight = drag ? drag.GetDraggedWeight() : 0f;
 
         float finalSpeed = runSpeed;
@@ -63,7 +63,7 @@ public class GooseMovement : MonoBehaviour
 
         agent.speed = Mathf.Lerp(agent.speed, finalSpeed, Time.deltaTime * 5f);
 
-        // Animation
+
         float normalizedSpeed = Mathf.InverseLerp(0f, agent.speed, agent.velocity.magnitude);
         anim.SetFloat("speed", normalizedSpeed);
     }
