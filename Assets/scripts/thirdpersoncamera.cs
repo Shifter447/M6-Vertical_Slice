@@ -1,52 +1,31 @@
 using UnityEngine;
 
-public class ThirdPersonCamera : MonoBehaviour
+public class FixedAngleCamera : MonoBehaviour
 {
-    [Header("Follow Settings")]
-    public Transform player;         // Player to follow
-    public Vector3 offset = new Vector3(0, 5, -10); // Default offset
-    public float followSmoothSpeed = 0.125f;        // Camera position smoothing
+    [Header("Target to Follow")]
+    public Transform player;
 
-    [Header("Zoom Settings")]
-    public float zoomSpeed = 10f;    // Zoom interpolation speed
-    public float minZoom = 30f;      // Min FOV
-    public float maxZoom = 60f;      // Max FOV
-    public float scrollMultiplier = 20f; // How much scroll affects zoom
+    [Header("Camera Offset")]
+    // Elevated and back at a 45-degree angle
+    public Vector3 offset = new Vector3(0, 10, -10);
 
-    private Camera cam;
-    private float targetFOV;
-    private float zoomVelocity = 0f;
-
-    void Start()
-    {
-        cam = GetComponent<Camera>();
-        if (cam == null)
-            cam = Camera.main;
-
-        targetFOV = cam.fieldOfView;
-    }
+    [Header("Smooth Follow")]
+    public float smoothSpeed = 0.125f;
 
     void LateUpdate()
     {
         if (player == null) return;
 
-        // --- Smooth Follow ---
+        // Desired position: player position plus offset
         Vector3 desiredPosition = player.position + offset;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, followSmoothSpeed);
+
+        // Smoothly interpolate to the desired position
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+
+        // Apply smoothed position
         transform.position = smoothedPosition;
 
-        // Optional: Rotate camera to look at the player smoothly
-        transform.LookAt(player);
-
-        // --- Mouse Scroll Zoom ---
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll != 0f)
-        {
-            targetFOV -= scroll * scrollMultiplier;
-            targetFOV = Mathf.Clamp(targetFOV, minZoom, maxZoom);
-        }
-
-        // Smooth FOV change
-        cam.fieldOfView = Mathf.SmoothDamp(cam.fieldOfView, targetFOV, ref zoomVelocity, 0.1f);
+        // Make camera look at the player
+        transform.LookAt(player.position);
     }
 }
