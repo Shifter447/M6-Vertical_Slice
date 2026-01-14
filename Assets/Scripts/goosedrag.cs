@@ -2,17 +2,28 @@ using UnityEngine;
 
 public class GooseDrag : MonoBehaviour
 {
+    [Header("Interaction")]
     public float interactDistance = 2f;
     public Transform carryPoint;
     public LayerMask interactLayer;
 
-    public float spring = 250f;
-    public float damper = 8f;
-    public float maxDistance = 0.1f;
+    [Header("Base Spring Settings")]
+    public float baseSpring = 180f;
+    public float baseDamper = 12f;
+    public float springSlack = 0.6f;
 
-    private SpringJoint currentJoint;
+    [Header("Player Pushback")]
+    public float playerPullForce = 40f;
+
+    private SpringJoint joint;
     private Rigidbody grabbedRb;
     private DraggableObject draggable;
+    private Rigidbody playerRb;
+
+    void Awake()
+    {
+        playerRb = GetComponent<Rigidbody>();
+    }
 
     void Update()
     {
@@ -23,12 +34,23 @@ public class GooseDrag : MonoBehaviour
             Release();
     }
 
+    void FixedUpdate()
+    {
+        if (joint == null)
+            return;
+
+        joint.connectedAnchor = carryPoint.position;
+        ApplyPlayerResistance();
+    }
+
     void TryGrab()
     {
-        if (currentJoint != null) return;
+        if (joint != null)
+            return;
 
         Collider[] hits = Physics.OverlapSphere(transform.position, interactDistance, interactLayer);
-        if (hits.Length == 0) return;
+        if (hits.Length == 0)
+            return;
 
         Collider nearest = hits[0];
         float bestDist = Vector3.Distance(transform.position, nearest.transform.position);
@@ -44,45 +66,74 @@ public class GooseDrag : MonoBehaviour
         }
 
         draggable = nearest.GetComponent<DraggableObject>();
-        if (draggable == null) return;
+        if (draggable == null)
+            return;
 
         grabbedRb = draggable.GetRigidbody();
 
-        currentJoint = grabbedRb.gameObject.AddComponent<SpringJoint>();
-        currentJoint.autoConfigureConnectedAnchor = false;
-        currentJoint.connectedBody = null;
-        currentJoint.connectedAnchor = carryPoint.position;
-        currentJoint.spring = spring;
-        currentJoint.damper = damper;
-        currentJoint.maxDistance = maxDistance;
+        joint = grabbedRb.gameObject.AddComponent<SpringJoint>();
+        joint.autoConfigureConnectedAnchor = false;
+        joint.connectedBody = null;
+        joint.connectedAnchor = carryPoint.position;
+
+        float weight = draggable.dragWeight;
+
+        joint.spring = baseSpring / weight;
+        joint.damper = baseDamper;
+        joint.maxDistance = springSlack;
+
+        draggable.StartDragging(transform, this);
     }
 
-    void FixedUpdate()
+    void ApplyPlayerResistance()
     {
-        if (currentJoint != null)
-            currentJoint.connectedAnchor = carryPoint.position;
-    }
+        if (playerRb == null || draggable == null)
+            return;
 
-    void Release()
-    {
-        if (currentJoint != null)
+        float maxReach = draggable.maxDragDistance;
+        Vector3 toObject = grabbedRb.position - transform.position;
+        float distance = toObject.magnitude;
+
+        if (distance > maxReach)
         {
-            Destroy(currentJoint);
-            currentJoint = null;
-        }
+            Vector3 pullDir = toObject.normalized;
+            float excess = distance - maxReach;
 
+            playerRb.AddForce(
+                pullDir * excess * playerPullForce,
+                ForceMode.Acceleration
+            );
+        }
+    }
+
+    public void Release()
+    {
+        if (joint != null)
+            Destroy(joint);
+
+        if (draggable != null)
+            draggable.StopDragging();
+
+        joint = null;
         grabbedRb = null;
         draggable = null;
     }
 
-    public float GetDraggedWeight()
-    {
-        return draggable ? draggable.dragWeight : 0f;
-    }
+    // ===== Compatibility Methods =====
 
     public Rigidbody GetGrabbedRigidbody()
     {
         return grabbedRb;
+    }
+
+    public float GetDraggedWeight()
+    {
+        return draggable != null ? draggable.dragWeight : 0f;
+    }
+
+    public bool IsDragging()
+    {
+        return joint != null;
     }
 
     void OnDrawGizmosSelected()

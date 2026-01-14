@@ -7,11 +7,12 @@ public class DraggableObject : MonoBehaviour
     [Range(0.1f, 15f)]
     public float dragWeight = 1f;
 
-    [Header("Drag Range Settings")]
-    public Transform player;              // Player reference
-    public float maxDragDistance = 3f;     // Maximum allowed distance from player
+    [Header("Drag Range")]
+    public float maxDragDistance = 3f;
 
     private Rigidbody rb;
+    private Transform player;
+    private GooseDrag dragger;
     private bool isBeingDragged;
 
     void Awake()
@@ -25,29 +26,33 @@ public class DraggableObject : MonoBehaviour
         if (!isBeingDragged || player == null)
             return;
 
-        // Vector from player to object
-        Vector3 offset = rb.position - player.position;
+        float distance = Vector3.Distance(rb.position, player.position);
 
-        // If object exceeds max distance, clamp it
-        if (offset.magnitude > maxDragDistance)
+        // Hard fail-safe only (teleports, explosions, etc.)
+        if (distance > maxDragDistance * 1.5f)
         {
-            Vector3 clampedPosition =
-                player.position + offset.normalized * maxDragDistance;
-
-            rb.MovePosition(clampedPosition);
+            ForceRelease();
         }
     }
 
-    // Call this when dragging starts
-    public void StartDragging()
+    public void StartDragging(Transform playerTransform, GooseDrag source)
     {
+        player = playerTransform;
+        dragger = source;
         isBeingDragged = true;
     }
 
-    // Call this when dragging ends
     public void StopDragging()
     {
         isBeingDragged = false;
+        player = null;
+        dragger = null;
+    }
+
+    void ForceRelease()
+    {
+        if (dragger != null)
+            dragger.Release();
     }
 
     public Rigidbody GetRigidbody()
