@@ -1,23 +1,41 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class CarryableObject : MonoBehaviour
 {
     [Header("Carry Settings")]
-    public float carryWeight = 1f;       // Optional, only if you want weight
-    public Vector3 carryOffset;          // Optional offset while carried
+    public float carryWeight = 1f;
+    public Vector3 carryOffset = Vector3.zero;
+
+    [Header("Pickup Point")]
+    public Transform pickupPoint;
+    public float pickupRadius = 1f; // increased for easier pickup
 
     private Rigidbody rb;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        if (rb == null)
-        {
-            rb = gameObject.AddComponent<Rigidbody>();
-        }
+        rb.mass = carryWeight;
+
+        // Safety
+        if (pickupPoint == null)
+            pickupPoint = transform;
     }
 
-    // Called by GooseCarry when picked up
+    // ===== PICKUP VALIDATION =====
+    public bool CanPickupFrom(Vector3 playerPosition)
+    {
+        return Vector3.Distance(playerPosition, GetPickupPosition()) <= pickupRadius;
+    }
+
+    public Vector3 GetPickupPosition()
+    {
+        return pickupPoint != null ? pickupPoint.position : transform.position;
+    }
+
+    // ===== PICKUP & DROP =====
     public void OnPickup(Transform carryPoint)
     {
         rb.useGravity = false;
@@ -28,17 +46,19 @@ public class CarryableObject : MonoBehaviour
         transform.localRotation = Quaternion.identity;
     }
 
-    // Called by GooseCarry when dropped
     public void OnDrop()
     {
         transform.SetParent(null);
-
-        rb.useGravity = true;
         rb.isKinematic = false;
+        rb.useGravity = true;
     }
 
-    public Rigidbody GetRigidbody()
+    // ===== DEBUG =====
+    void OnDrawGizmosSelected()
     {
-        return rb;
+        if (pickupPoint == null) return;
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(pickupPoint.position, pickupRadius);
     }
 }

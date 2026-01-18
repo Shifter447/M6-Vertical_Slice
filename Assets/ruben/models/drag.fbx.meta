@@ -22,7 +22,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -112,7 +112,187 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: drag(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: WGT-Armature.001_bovenbeen.L.001
+      parentName: drag(Clone)
+      position: {x: 0.0066816807, y: 0.17074291, z: 0.22178748}
+      rotation: {x: -0.0507213, y: -0.7052853, z: 0.0507213, w: 0.7052853}
+      scale: {x: 0.1756424, y: 0.1756424, z: 0.1756424}
+    - name: WGT-Armature.001_nigger.001
+      parentName: drag(Clone)
+      position: {x: 0.23194544, y: 0.17039329, z: -0.27778125}
+      rotation: {x: -3.5527145e-15, y: -0.70710665, z: -3.5527133e-15, w: 0.7071069}
+      scale: {x: 0.17020229, y: 0.17020229, z: 0.17020229}
+    - name: backup
+      parentName: drag(Clone)
+      position: {x: -0.002472232, y: 0.0012197755, z: -0.0007479215}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: trekken
+      parentName: drag(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Bone.007
+      parentName: trekken
+      position: {x: 0.0015566488, y: 0.00041721764, z: 0.0031853684}
+      rotation: {x: 0.50000006, y: 0.50000006, z: -0.5, w: 0.5}
+      scale: {x: 0.99999994, y: 0.99999994, z: 0.9999999}
+    - name: bovenbeen.L
+      parentName: Bone.007
+      position: {x: -0.001364028, y: -0.0030251252, z: 0.002185089}
+      rotation: {x: 0.4276708, y: 0.5691705, z: 0.48442858, w: -0.50840104}
+      scale: {x: 1, y: 1.0000002, z: 1}
+    - name: Kuit.L
+      parentName: bovenbeen.L
+      position: {x: -2.73576e-11, y: 0.0029573732, z: 6.519258e-11}
+      rotation: {x: -0.12010336, y: -0.00018405914, z: -0.008520961, w: 0.9927249}
+      scale: {x: 1, y: 0.99999964, z: 0.9999997}
+    - name: Kuit.L_end
+      parentName: Kuit.L
+      position: {x: -0, y: 0.0010401832, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IK_LEG.L
+      parentName: Bone.007
+      position: {x: 0.0025029567, y: -0.0023501194, z: 0.0028118792}
+      rotation: {x: 0.7071069, y: 0.00000029802322, z: 0.70710677, w: 0.00000023841858}
+      scale: {x: 0.9999998, y: 0.99999964, z: 0.9999997}
+    - name: mIdenvoet.L
+      parentName: IK_LEG.L
+      position: {x: -1.5391836e-10, y: -1.4901161e-10, z: 9.567921e-10}
+      rotation: {x: 0.9834105, y: 0.000018142666, z: 0.00009626149, w: 0.18139441}
+      scale: {x: 1, y: 1, z: 0.9999986}
+    - name: Tenen.L
+      parentName: mIdenvoet.L
+      position: {x: 1.1816384e-10, y: 0.00084630627, z: 1.3133103e-11}
+      rotation: {x: 0.1494637, y: -0.000096787866, z: 0.000014631434, w: 0.98876727}
+      scale: {x: 0.99999994, y: 0.99999976, z: 0.99999976}
+    - name: Tenen.L_end
+      parentName: Tenen.L
+      position: {x: -0, y: 0.0017385028, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: nigger
+      parentName: IK_LEG.L
+      position: {x: -0.0001767862, y: -0.0008602872, z: -0.0010250174}
+      rotation: {x: 0.997424, y: 0.00000036215033, z: -0.071730845, w: 0.00000009822325}
+      scale: {x: 0.9999999, y: 1.0000004, z: 1.0000002}
+    - name: nigger_end
+      parentName: nigger
+      position: {x: -0, y: 0.0017117806, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: base
+      parentName: Bone.007
+      position: {x: -0.001737107, y: -0.0023501194, z: 0.00006942887}
+      rotation: {x: 0.027374566, y: 0.011749862, z: 0.51394504, w: 0.8573057}
+      scale: {x: 1, y: 0.9999998, z: 1.0000001}
+    - name: rug1
+      parentName: base
+      position: {x: -9.2366566e-11, y: 0.0028940137, z: -6.984919e-12}
+      rotation: {x: -0.02415759, y: 0.0054866984, z: 0.11324951, w: 0.9932577}
+      scale: {x: 1, y: 0.99999994, z: 0.99999994}
+    - name: rug2
+      parentName: rug1
+      position: {x: -2.407512e-10, y: 0.003459061, z: 0}
+      rotation: {x: 0.0024238043, y: 0.0074160895, z: 0.28772977, w: 0.95767987}
+      scale: {x: 0.99999994, y: 0.9999999, z: 0.99999994}
+    - name: rug3
+      parentName: rug2
+      position: {x: 4.4329615e-10, y: 0.003244369, z: -1.16415315e-11}
+      rotation: {x: 0.01064727, y: -0.003375447, z: -0.02583868, w: 0.99960375}
+      scale: {x: 1.0000001, y: 1.0000006, z: 1.0000001}
+    - name: hoofd
+      parentName: rug3
+      position: {x: -6.477785e-10, y: 0.003475707, z: -6.0535965e-11}
+      rotation: {x: -0.042919282, y: 0.01412539, z: -0.3662898, w: 0.9294032}
+      scale: {x: 0.99999976, y: 1.0000004, z: 1}
+    - name: hoofd1
+      parentName: hoofd
+      position: {x: -6.1350874e-10, y: 0.0014953488, z: 9.3132255e-12}
+      rotation: {x: 0.045598444, y: 0.011609953, z: -0.39023697, w: 0.9195113}
+      scale: {x: 0.9999999, y: 1.0000001, z: 0.9999998}
+    - name: snavel
+      parentName: hoofd1
+      position: {x: -6.507616e-10, y: 0.002003563, z: -3.259629e-11}
+      rotation: {x: 0.0056818947, y: 0.0010447222, z: 0.20400536, w: -0.9789527}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1}
+    - name: snavel_end
+      parentName: snavel
+      position: {x: -0, y: 0.0015164944, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: staart_base
+      parentName: Bone.007
+      position: {x: -0.0017510458, y: -0.0032280057, z: 0.000004498847}
+      rotation: {x: -0.0017955601, y: -0.0077058375, z: 0.9791386, w: 0.2030397}
+      scale: {x: 1.0000012, y: 0.9999999, z: 0.9999998}
+    - name: staart_midden
+      parentName: staart_base
+      position: {x: -1.5295881e-10, y: 0.0021066947, z: 2.7939677e-11}
+      rotation: {x: 0.0078248335, y: -0.001113385, z: 0.12061595, w: 0.9926678}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1}
+    - name: staart_punt
+      parentName: staart_midden
+      position: {x: -6.389837e-10, y: 0.0027409177, z: 1.4297256e-11}
+      rotation: {x: 0.08530825, y: -0.0005183587, z: -0.024105452, w: 0.9960629}
+      scale: {x: 1.0000006, y: 1.0000008, z: 1}
+    - name: staart_punt_end
+      parentName: staart_punt
+      position: {x: -0, y: 0.0028430682, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bovenbeen.R
+      parentName: Bone.007
+      position: {x: -0.0013089619, y: -0.0030444108, z: -0.0023605947}
+      rotation: {x: 0.43353003, y: 0.55861604, z: 0.43352994, w: -0.5586159}
+      scale: {x: 0.9999999, y: 1.0000001, z: 1.0000001}
+    - name: Kuit.r
+      parentName: bovenbeen.R
+      position: {x: 5.0088503e-11, y: 0.0028805386, z: -4.794973e-12}
+      rotation: {x: -0.13050549, y: -0.00000005960463, z: 0.00000007450579, w: 0.99144757}
+      scale: {x: 1.0000004, y: 1, z: 1}
+    - name: Kuit.r_end
+      parentName: Kuit.r
+      position: {x: -0, y: 0.0010212748, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Iklegcontroller.R
+      parentName: Bone.007
+      position: {x: 0.002502649, y: -0.0023406015, z: -0.002360595}
+      rotation: {x: 0.7071069, y: 0.00000011920929, z: 0.70710677, w: 0.000000059604645}
+      scale: {x: 0.9999999, y: 0.9999999, z: 0.99999976}
+    - name: hak.R
+      parentName: Iklegcontroller.R
+      position: {x: -3.2162734e-11, y: -2.2351741e-10, z: 3.338902e-10}
+      rotation: {x: 0.7911255, y: -0.000000019178955, z: -0.000000029802322, w: 0.611654}
+      scale: {x: 1, y: 0.99999976, z: 1.0000006}
+    - name: voet.R
+      parentName: hak.R
+      position: {x: -1.2427834e-10, y: 0.00085181155, z: 8.720121e-11}
+      rotation: {x: 0.053994875, y: -0.0050529274, z: 0.03126057, w: 0.998039}
+      scale: {x: 1.0000002, y: 0.99999994, z: 1.0000002}
+    - name: voet.R_end
+      parentName: voet.R
+      position: {x: -0, y: 0.0017213803, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: nigger.001
+      parentName: Iklegcontroller.R
+      position: {x: 3.655127e-10, y: -0.0031034073, z: -0.0010212138}
+      rotation: {x: -1, y: -0.00000004214685, z: -0, w: -0.000000042146848}
+      scale: {x: 1, y: 0.9999999, z: 1}
+    - name: nigger.001_end
+      parentName: nigger.001
+      position: {x: -0, y: 0.0017020229, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -123,13 +303,13 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0

@@ -22,7 +22,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -42,7 +42,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -112,7 +112,217 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: transition(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: backup.003
+      parentName: transition(Clone)
+      position: {x: -0.002472232, y: 0.0012197753, z: -1.9555972}
+      rotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: transform oppakken
+      parentName: transition(Clone)
+      position: {x: -0, y: -5.684342e-16, z: -1.9548492}
+      rotation: {x: -0.7071069, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Bone.007
+      parentName: transform oppakken
+      position: {x: 0.0015566488, y: 0.00041721764, z: 0.0031853684}
+      rotation: {x: 0.50000006, y: 0.49999994, z: -0.5, w: 0.5}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: bovenbeen.L
+      parentName: Bone.007
+      position: {x: -0.0013640285, y: -0.0030251262, z: 0.002185089}
+      rotation: {x: -0.43370908, y: -0.57533175, z: -0.47876632, w: 0.5016698}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1}
+    - name: Kuit.L
+      parentName: bovenbeen.L
+      position: {x: 8.0501195e-10, y: 0.0029573734, z: -2.7939677e-11}
+      rotation: {x: -0.120103456, y: -0.00018409402, z: -0.008520966, w: 0.99272484}
+      scale: {x: 0.9999999, y: 0.99999964, z: 0.9999999}
+    - name: Kuit.L_end
+      parentName: Kuit.L
+      position: {x: 1.0826625e-10, y: 0.0010401834, z: 4.5401974e-11}
+      rotation: {x: -0.000000009778888, y: 3.2014214e-10, z: -0.00000000748696, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Kuit.L_end_end
+      parentName: Kuit.L_end
+      position: {x: -0, y: 0.0010401832, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IK_LEG.L
+      parentName: Bone.007
+      position: {x: 0.002502956, y: -0.00235012, z: 0.0028118794}
+      rotation: {x: 0.70710695, y: -4.329779e-17, z: 0.7071066, w: 4.3297813e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mIdenvoet.L
+      parentName: IK_LEG.L
+      position: {x: 1.5649262e-10, y: -5.5874855e-10, z: 9.613645e-10}
+      rotation: {x: 0.9834104, y: 0.000017658434, z: 0.0000965852, w: 0.1813945}
+      scale: {x: 1, y: 1, z: 0.9999989}
+    - name: Tenen.L
+      parentName: mIdenvoet.L
+      position: {x: -5.7338755e-11, y: 0.0008463062, z: 9.829818e-11}
+      rotation: {x: 0.14946385, y: -0.000096679374, z: 0.0000146153025, w: 0.9887672}
+      scale: {x: 0.9999999, y: 0.9999999, z: 1}
+    - name: Tenen.L_end
+      parentName: Tenen.L
+      position: {x: 2.1441891e-10, y: 0.0017385031, z: 4.226308e-12}
+      rotation: {x: 0.000000018626453, y: 1.09152465e-10, z: -4.884981e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Tenen.L_end_end
+      parentName: Tenen.L_end
+      position: {x: -0, y: 0.0017385028, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: nigger
+      parentName: IK_LEG.L
+      position: {x: -0.00017678637, y: -0.0008602877, z: -0.0010250174}
+      rotation: {x: 0.99742407, y: -2.7640557e-15, z: -0.0717303, w: -1.3801985e-16}
+      scale: {x: 0.9999999, y: 1, z: 0.9999999}
+    - name: nigger_end
+      parentName: nigger
+      position: {x: 1.2286937e-10, y: 0.0017117806, z: 1.7202036e-10}
+      rotation: {x: 2.2204463e-15, y: -0.000000007450581, z: -8.881784e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: nigger_end_end
+      parentName: nigger_end
+      position: {x: -0, y: 0.0017117804, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: base
+      parentName: Bone.007
+      position: {x: -0.001737107, y: -0.00235012, z: 0.00006942869}
+      rotation: {x: 0.027374536, y: 0.011749893, z: 0.513945, w: 0.85730577}
+      scale: {x: 1, y: 0.99999994, z: 0.99999994}
+    - name: rug1
+      parentName: base
+      position: {x: 4.9692395e-10, y: 0.0028940134, z: -2.561137e-11}
+      rotation: {x: -0.024157505, y: 0.005486673, z: 0.11324963, w: 0.9932577}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1}
+    - name: rug2
+      parentName: rug1
+      position: {x: 1.9737456e-10, y: 0.003459061, z: 9.988435e-10}
+      rotation: {x: 0.0024237859, y: 0.0074161016, z: 0.2877296, w: 0.9576799}
+      scale: {x: 0.99999976, y: 1, z: 0.99999994}
+    - name: rug3
+      parentName: rug2
+      position: {x: 1.5419267e-10, y: 0.0032443684, z: 2.1944288e-10}
+      rotation: {x: 0.010647273, y: -0.0033754045, z: -0.025838602, w: 0.99960375}
+      scale: {x: 0.99999994, y: 1, z: 0.99999994}
+    - name: hoofd
+      parentName: rug3
+      position: {x: 2.2409949e-10, y: 0.0034757054, z: -0.000000002104498}
+      rotation: {x: -0.042919412, y: 0.014125198, z: -0.36628988, w: 0.9294031}
+      scale: {x: 0.99999994, y: 0.9999999, z: 0.9999999}
+    - name: hoofd1
+      parentName: hoofd
+      position: {x: -0.000000002106717, y: 0.0014953444, z: 9.49949e-10}
+      rotation: {x: 0.05690942, y: 0.052854843, z: 0.05342115, w: 0.995547}
+      scale: {x: 0.9999999, y: 0.9999998, z: 1}
+    - name: snavel
+      parentName: hoofd1
+      position: {x: -0.0000000051641837, y: 0.0020035643, z: 0}
+      rotation: {x: -0.0056818486, y: -0.0010448791, z: -0.20400542, w: 0.9789527}
+      scale: {x: 1.0000002, y: 1, z: 0.99999994}
+    - name: snavel_end
+      parentName: snavel
+      position: {x: -1.7811544e-10, y: 0.0015164944, z: 1.0244548e-10}
+      rotation: {x: 4.6566134e-10, y: 0.0000000805594, z: 0.0000000020954762, w: 1}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: snavel_end_end
+      parentName: snavel_end
+      position: {x: -0, y: 0.0015164944, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: staart_base
+      parentName: Bone.007
+      position: {x: -0.0017510457, y: -0.0032280062, z: 0.00000449863}
+      rotation: {x: -0.0017955366, y: -0.007705877, z: 0.97913843, w: 0.20304017}
+      scale: {x: 1.0000006, y: 0.99999994, z: 0.9999999}
+    - name: staart_midden
+      parentName: staart_base
+      position: {x: 4.2911777e-10, y: 0.0021066952, z: 0.0000000014086253}
+      rotation: {x: 0.007824874, y: -0.0011134215, z: 0.12061635, w: 0.99266773}
+      scale: {x: 0.9999998, y: 0.9999999, z: 1}
+    - name: staart_punt
+      parentName: staart_midden
+      position: {x: -8.7401303e-10, y: 0.002740919, z: 4.8262335e-11}
+      rotation: {x: 0.085308254, y: -0.0005183216, z: -0.024105538, w: 0.9960629}
+      scale: {x: 1.0000001, y: 1, z: 0.99999994}
+    - name: staart_punt_end
+      parentName: staart_punt
+      position: {x: -4.4679835e-10, y: 0.0028430691, z: 2.188608e-10}
+      rotation: {x: -0.0000000057043508, y: 0.000000026950147, z: 0.000000019092111, w: 1}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: staart_punt_end_end
+      parentName: staart_punt_end
+      position: {x: -0, y: 0.0028430687, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bovenbeen.R
+      parentName: Bone.007
+      position: {x: -0.0013089617, y: -0.0030444118, z: -0.002360595}
+      rotation: {x: -0.43352962, y: -0.5586162, z: -0.43352956, w: 0.5586163}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: Kuit.r
+      parentName: bovenbeen.R
+      position: {x: 9.73277e-11, y: 0.002880538, z: -6.35841e-11}
+      rotation: {x: -0.1305078, y: 0.00000014512061, z: -0.000000050998743, w: 0.9914473}
+      scale: {x: 1, y: 0.99999964, z: 0.99999976}
+    - name: Kuit.r_end
+      parentName: Kuit.r
+      position: {x: 7.8270244e-11, y: 0.001021275, z: -4.709051e-11}
+      rotation: {x: -0.0000000023283053, y: -2.697842e-14, z: -1.3322676e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Kuit.r_end_end
+      parentName: Kuit.r_end
+      position: {x: -0, y: 0.001021275, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Iklegcontroller.R
+      parentName: Bone.007
+      position: {x: 0.0025026493, y: -0.0023406025, z: -0.0023605945}
+      rotation: {x: 0.7071068, y: -4.32978e-17, z: 0.7071067, w: 4.3297806e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: hak.R
+      parentName: Iklegcontroller.R
+      position: {x: 2.205938e-10, y: -9.355033e-11, z: 3.3736341e-10}
+      rotation: {x: 0.79112566, y: 0.00000017881393, z: 0.00000020861626, w: 0.6116537}
+      scale: {x: 1, y: 1.0000001, z: 1.0000019}
+    - name: voet.R
+      parentName: hak.R
+      position: {x: -4.943149e-11, y: 0.00085181167, z: 2.5623876e-11}
+      rotation: {x: 0.053994447, y: -0.005052846, z: 0.03126051, w: 0.998039}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: voet.R_end
+      parentName: voet.R
+      position: {x: -2.7246796e-10, y: 0.0017213803, z: 5.9282e-12}
+      rotation: {x: 0.000000023283068, y: -0.0000000018624554, z: 1.776357e-15, w: 1}
+      scale: {x: 1, y: 0.99999994, z: 0.99999994}
+    - name: voet.R_end_end
+      parentName: voet.R_end
+      position: {x: -0, y: 0.0017213802, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: nigger.001
+      parentName: Iklegcontroller.R
+      position: {x: 7.274771e-10, y: -0.0031034076, z: -0.0010212138}
+      rotation: {x: 1, y: -4.1603304e-16, z: 0.00000031391647, w: -6.123221e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: nigger.001_end
+      parentName: nigger.001
+      position: {x: 2.7100242e-11, y: 0.0017020225, z: 1.0997389e-10}
+      rotation: {x: -3.5527205e-15, y: -8.4703295e-22, z: 3.5527137e-15, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: nigger.001_end_end
+      parentName: nigger.001_end
+      position: {x: -0, y: 0.0017020231, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -123,13 +333,13 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
