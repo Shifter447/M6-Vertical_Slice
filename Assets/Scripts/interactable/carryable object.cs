@@ -10,7 +10,7 @@ public class CarryableObject : MonoBehaviour
 
     [Header("Pickup Point")]
     public Transform pickupPoint;
-    public float pickupRadius = 1f; // increased for easier pickup
+    public float pickupRadius = 1f;
 
     private Rigidbody rb;
 
@@ -19,27 +19,20 @@ public class CarryableObject : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.mass = carryWeight;
 
-        // Safety
         if (pickupPoint == null)
             pickupPoint = transform;
     }
 
-    // ===== PICKUP VALIDATION =====
-    public bool CanPickupFrom(Vector3 playerPosition)
-    {
-        return Vector3.Distance(playerPosition, GetPickupPosition()) <= pickupRadius;
-    }
-
     public Vector3 GetPickupPosition()
     {
-        return pickupPoint != null ? pickupPoint.position : transform.position;
+        return pickupPoint.position;
     }
 
-    // ===== PICKUP & DROP =====
     public void OnPickup(Transform carryPoint)
     {
         rb.useGravity = false;
         rb.isKinematic = true;
+        rb.detectCollisions = false;
 
         transform.SetParent(carryPoint);
         transform.localPosition = carryOffset;
@@ -49,16 +42,9 @@ public class CarryableObject : MonoBehaviour
     public void OnDrop()
     {
         transform.SetParent(null);
+
         rb.isKinematic = false;
         rb.useGravity = true;
-    }
-
-    // ===== DEBUG =====
-    void OnDrawGizmosSelected()
-    {
-        if (pickupPoint == null) return;
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(pickupPoint.position, pickupRadius);
+        rb.detectCollisions = true;
     }
 }

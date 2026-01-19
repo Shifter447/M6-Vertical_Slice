@@ -3,15 +3,14 @@ using UnityEngine;
 public class PlayerCarry : MonoBehaviour
 {
     [Header("Interaction")]
-    public float interactDistance = 3f; // distance player can pick up objects
-    public Transform carryPoint; // assign in inspector
-    public LayerMask interactLayer; // must include layer of CarryableObjects
+    public float interactDistance = 3f;
+    public Transform carryPoint;
+    public LayerMask interactLayer;
 
     private CarryableObject carriedObject;
 
     void Update()
     {
-        // Only right-click
         if (Input.GetMouseButtonDown(1))
         {
             if (carriedObject == null)
@@ -23,25 +22,25 @@ public class PlayerCarry : MonoBehaviour
 
     void TryPickUp()
     {
-        // Find all colliders within interactDistance on interactLayer
-        Collider[] hits = Physics.OverlapSphere(transform.position, interactDistance, interactLayer);
-
-        if (hits.Length == 0)
-            return;
+        Collider[] hits = Physics.OverlapSphere(
+            transform.position,
+            interactDistance,
+            interactLayer
+        );
 
         CarryableObject closest = null;
         float closestDistance = float.MaxValue;
 
-        foreach (var hit in hits)
+        foreach (Collider hit in hits)
         {
-            CarryableObject carryable = hit.GetComponent<CarryableObject>();
+            CarryableObject carryable = hit.GetComponentInParent<CarryableObject>();
             if (carryable == null)
                 continue;
 
-            float dist = Vector3.Distance(transform.position, carryable.GetPickupPosition());
-
-            if (!carryable.CanPickupFrom(transform.position))
-                continue;
+            float dist = Vector3.Distance(
+                transform.position,
+                carryable.GetPickupPosition()
+            );
 
             if (dist < closestDistance)
             {
@@ -59,16 +58,7 @@ public class PlayerCarry : MonoBehaviour
 
     void Drop()
     {
-        if (carriedObject == null)
-            return;
-
         carriedObject.OnDrop();
         carriedObject = null;
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, interactDistance);
     }
 }
