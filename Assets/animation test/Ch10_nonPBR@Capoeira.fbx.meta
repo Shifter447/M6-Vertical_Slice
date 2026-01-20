@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cc8476e867700ba46857945e76c20e8a
+guid: 08cf1849499f7164a8f0cdd8495bea74
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -83,12 +83,7 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton:
-    - name: mens(Clone)
-      parentName: 
-      position: {x: 3.37033, y: -0.4030569, z: 12.106882}
-      rotation: {x: 0.5, y: -0.49999997, z: -0.5, w: -0.5}
-      scale: {x: 12.5515175, y: 16.717096, z: 12.5515175}
+    skeleton: []
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -99,11 +94,11 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1

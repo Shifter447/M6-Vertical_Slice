@@ -23,8 +23,7 @@ public class DraggableObject : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isBeingDragged || player == null)
-            return;
+        if (!isBeingDragged || player == null) return;
 
         float distance = Vector3.Distance(rb.position, player.position);
 
@@ -55,8 +54,5 @@ public class DraggableObject : MonoBehaviour
             dragger.Release();
     }
 
-    public Rigidbody GetRigidbody()
-    {
-        return rb;
-    }
+    public Rigidbody GetRigidbody() => rb;
 }

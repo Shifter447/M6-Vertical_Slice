@@ -20,6 +20,7 @@ public class GooseDrag : MonoBehaviour
     private DraggableObject draggable;
     private Rigidbody playerRb;
 
+    // Cache player colliders
     private Collider[] playerColliders;
 
     void Awake()
@@ -30,17 +31,13 @@ public class GooseDrag : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-            TryGrab();
-
-        if (Input.GetMouseButtonUp(1))
-            Release();
+        if (Input.GetMouseButtonDown(1)) TryGrab();
+        if (Input.GetMouseButtonUp(1)) Release();
     }
 
     void FixedUpdate()
     {
-        if (joint == null)
-            return;
+        if (joint == null) return;
 
         joint.connectedAnchor = carryPoint.position;
         ApplyPlayerResistance();
@@ -48,33 +45,41 @@ public class GooseDrag : MonoBehaviour
 
     void TryGrab()
     {
-        if (joint != null)
-            return;
+        if (joint != null) return;
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, interactDistance, interactLayer);
-        if (hits.Length == 0)
-            return;
+        Collider[] hits = Physics.OverlapSphere(
+            transform.position,
+            interactDistance,
+            interactLayer,
+            QueryTriggerInteraction.Ignore
+        );
 
-        Collider nearest = hits[0];
-        float bestDist = Vector3.Distance(transform.position, nearest.transform.position);
+        float bestDist = float.MaxValue;
+        DraggableObject bestDraggable = null;
 
-        foreach (var h in hits)
+        foreach (var hit in hits)
         {
-            float d = Vector3.Distance(transform.position, h.transform.position);
-            if (d < bestDist)
+            // Ignore player colliders
+            if (IsPlayerCollider(hit))
+                continue;
+
+            DraggableObject d = hit.GetComponent<DraggableObject>();
+            if (d == null)
+                continue;
+
+            float dist = Vector3.Distance(transform.position, hit.transform.position);
+            if (dist < bestDist)
             {
-                bestDist = d;
-                nearest = h;
+                bestDist = dist;
+                bestDraggable = d;
             }
         }
 
-        draggable = nearest.GetComponent<DraggableObject>();
-        if (draggable == null)
+        if (bestDraggable == null)
             return;
 
+        draggable = bestDraggable;
         grabbedRb = draggable.GetRigidbody();
-
-        IgnorePlayerCollision(true);
 
         joint = grabbedRb.gameObject.AddComponent<SpringJoint>();
         joint.autoConfigureConnectedAnchor = false;
@@ -89,10 +94,19 @@ public class GooseDrag : MonoBehaviour
         draggable.StartDragging(transform, this);
     }
 
+    bool IsPlayerCollider(Collider col)
+    {
+        foreach (var pc in playerColliders)
+        {
+            if (col == pc)
+                return true;
+        }
+        return false;
+    }
+
     void ApplyPlayerResistance()
     {
-        if (playerRb == null || draggable == null)
-            return;
+        if (playerRb == null || draggable == null) return;
 
         float maxReach = draggable.maxDragDistance;
         Vector3 toObject = grabbedRb.position - transform.position;
@@ -100,9 +114,11 @@ public class GooseDrag : MonoBehaviour
 
         if (distance > maxReach)
         {
+            Vector3 pullDir = toObject.normalized;
             float excess = distance - maxReach;
+
             playerRb.AddForce(
-                toObject.normalized * excess * playerPullForce,
+                pullDir * excess * playerPullForce,
                 ForceMode.Acceleration
             );
         }
@@ -110,52 +126,17 @@ public class GooseDrag : MonoBehaviour
 
     public void Release()
     {
-        if (grabbedRb != null)
-            IgnorePlayerCollision(false);
-
-        if (joint != null)
-            Destroy(joint);
-
-        if (draggable != null)
-            draggable.StopDragging();
+        if (joint != null) Destroy(joint);
+        if (draggable != null) draggable.StopDragging();
 
         joint = null;
         grabbedRb = null;
         draggable = null;
     }
 
-    void IgnorePlayerCollision(bool ignore)
-    {
-        if (grabbedRb == null)
-            return;
-
-        Collider[] objectColliders = grabbedRb.GetComponentsInChildren<Collider>();
-
-        foreach (var pc in playerColliders)
-        {
-            foreach (var oc in objectColliders)
-            {
-                Physics.IgnoreCollision(pc, oc, ignore);
-            }
-        }
-    }
-
-    // ===== Compatibility Methods =====
-
-    public Rigidbody GetGrabbedRigidbody()
-    {
-        return grabbedRb;
-    }
-
-    public float GetDraggedWeight()
-    {
-        return draggable != null ? draggable.dragWeight : 0f;
-    }
-
-    public bool IsDragging()
-    {
-        return joint != null;
-    }
+    public Rigidbody GetGrabbedRigidbody() => grabbedRb;
+    public float GetDraggedWeight() => draggable ? draggable.dragWeight : 0f;
+    public bool IsDragging() => joint != null;
 
     void OnDrawGizmosSelected()
     {

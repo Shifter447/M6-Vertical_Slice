@@ -11,7 +11,7 @@ public class GooseMovement : MonoBehaviour
     public float moveSpeed = 10f;
     public float runMultiplier = 1.7f;
 
-    [Header("Input Settings")]
+    [Header("Input Setting")]
     [SerializeField] float sampleDistance = 0.5f;
     [SerializeField] LayerMask groundLayer;
 
@@ -19,77 +19,65 @@ public class GooseMovement : MonoBehaviour
 
     private float baseSpeed;
 
-    void Awake()
-    {
-        agent = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>();
-        drag = GetComponent<GooseDrag>();
-    }
+    // Cached animator parameter
+    private static readonly int SpeedHash = Animator.StringToHash("speed");
 
     void Start()
     {
+        anim = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        drag = GetComponent<GooseDrag>();
+
         baseSpeed = moveSpeed;
         agent.speed = baseSpeed;
-
-        // IMPORTANT: allow NavMeshAgent to control rotation normally
-        agent.updateRotation = true;
     }
 
     void Update()
     {
-        HandleMovementInput();
-        UpdateSpeed();
-        UpdateAnimation();
-    }
-
-    void HandleMovementInput()
-    {
-        if (!Input.GetMouseButtonDown(0))
-            return;
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundLayer))
+        if (Input.GetMouseButtonDown(0))
         {
-            if (NavMesh.SamplePosition(
-                hit.point,
-                out NavMeshHit navHit,
-                sampleDistance,
-                NavMesh.AllAreas))
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, groundLayer))
             {
-                agent.SetDestination(navHit.position);
-                OnGroundTouch?.Invoke(navHit.position);
+                if (NavMesh.SamplePosition(
+                    hit.point,
+                    out NavMeshHit navMeshHit,
+                    sampleDistance,
+                    NavMesh.AllAreas))
+                {
+                    agent.SetDestination(navMeshHit.position);
+                    OnGroundTouch?.Invoke(navMeshHit.position);
+                }
             }
         }
-    }
 
-    void UpdateSpeed()
-    {
         bool isRunning = Input.GetMouseButton(0);
-        float targetSpeed = isRunning
+        float runSpeed = isRunning
             ? baseSpeed * runMultiplier
             : baseSpeed;
 
-        float weight = drag != null ? drag.GetDraggedWeight() : 0f;
+        float weight = drag ? drag.GetDraggedWeight() : 0f;
+        float finalSpeed = runSpeed;
 
         if (weight > 0f)
         {
-            float slowdownFactor = 1f / (1f + weight * 0.4f);
-            targetSpeed *= slowdownFactor;
+            float factor = 1f / (1f + weight * 0.4f);
+            finalSpeed *= factor;
         }
 
         agent.speed = Mathf.Lerp(
             agent.speed,
-            targetSpeed,
+            finalSpeed,
             Time.deltaTime * 5f
         );
-    }
 
-    void UpdateAnimation()
-    {
-        float normalizedSpeed =
-            Mathf.InverseLerp(0f, agent.speed, agent.velocity.magnitude);
+        float normalizedSpeed = Mathf.InverseLerp(
+            0f,
+            agent.speed,
+            agent.velocity.magnitude
+        );
 
-        anim.SetFloat("speed", normalizedSpeed);
+        anim.SetFloat(SpeedHash, normalizedSpeed);
     }
 }
