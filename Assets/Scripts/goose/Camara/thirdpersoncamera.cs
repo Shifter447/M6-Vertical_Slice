@@ -41,6 +41,7 @@ public class FixedAngleCamera : MonoBehaviour
 
         transform.position = smoothedPosition;
 
+        // ORIGINAL BEHAVIOR: camera always looks at player
         transform.LookAt(player.position);
     }
 

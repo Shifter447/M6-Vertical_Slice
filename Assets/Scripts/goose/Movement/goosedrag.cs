@@ -20,9 +20,12 @@ public class GooseDrag : MonoBehaviour
     private DraggableObject draggable;
     private Rigidbody playerRb;
 
+    private Collider[] playerColliders;
+
     void Awake()
     {
         playerRb = GetComponent<Rigidbody>();
+        playerColliders = GetComponentsInChildren<Collider>();
     }
 
     void Update()
@@ -71,13 +74,14 @@ public class GooseDrag : MonoBehaviour
 
         grabbedRb = draggable.GetRigidbody();
 
+        IgnorePlayerCollision(true);
+
         joint = grabbedRb.gameObject.AddComponent<SpringJoint>();
         joint.autoConfigureConnectedAnchor = false;
         joint.connectedBody = null;
         joint.connectedAnchor = carryPoint.position;
 
         float weight = draggable.dragWeight;
-
         joint.spring = baseSpring / weight;
         joint.damper = baseDamper;
         joint.maxDistance = springSlack;
@@ -96,11 +100,9 @@ public class GooseDrag : MonoBehaviour
 
         if (distance > maxReach)
         {
-            Vector3 pullDir = toObject.normalized;
             float excess = distance - maxReach;
-
             playerRb.AddForce(
-                pullDir * excess * playerPullForce,
+                toObject.normalized * excess * playerPullForce,
                 ForceMode.Acceleration
             );
         }
@@ -108,6 +110,9 @@ public class GooseDrag : MonoBehaviour
 
     public void Release()
     {
+        if (grabbedRb != null)
+            IgnorePlayerCollision(false);
+
         if (joint != null)
             Destroy(joint);
 
@@ -117,6 +122,22 @@ public class GooseDrag : MonoBehaviour
         joint = null;
         grabbedRb = null;
         draggable = null;
+    }
+
+    void IgnorePlayerCollision(bool ignore)
+    {
+        if (grabbedRb == null)
+            return;
+
+        Collider[] objectColliders = grabbedRb.GetComponentsInChildren<Collider>();
+
+        foreach (var pc in playerColliders)
+        {
+            foreach (var oc in objectColliders)
+            {
+                Physics.IgnoreCollision(pc, oc, ignore);
+            }
+        }
     }
 
     // ===== Compatibility Methods =====
