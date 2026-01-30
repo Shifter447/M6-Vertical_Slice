@@ -11,8 +11,15 @@
 # visual sheet, Camera Zoom
 <img width="966" height="541" alt="image" src="https://github.com/user-attachments/assets/791f7904-2795-4c5b-8c64-1a99a9054304" />
 
-```Mermaid
+## System Architecture
+
+```mermaid
 classDiagram
+    direction LR
+    class GooseDrag
+    class DraggableObject
+    GooseDrag --> DraggableObject
+
 
     %% ===== Core Player / Goose =====
     class GooseMovement {
