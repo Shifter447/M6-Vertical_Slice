@@ -13,7 +13,6 @@
 
 ```Mermaid
 classDiagram
-    direction LR
 
     %% ===== Core Player / Goose =====
     class GooseMovement {
