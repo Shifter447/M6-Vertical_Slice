@@ -137,3 +137,5 @@ classDiagram
     GooseDrag --> Rigidbody
     DraggableObject --> Rigidbody
 ```
+
+(er zijn een paar classes waar ik in de vertical slice zelf niks mee doe ivm conflicte met andere script maar ik wou ze hier nogsteeds inzetten)
