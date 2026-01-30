@@ -10,3 +10,124 @@
 
 # visual sheet, Camera Zoom
 <img width="966" height="541" alt="image" src="https://github.com/user-attachments/assets/791f7904-2795-4c5b-8c64-1a99a9054304" />
+
+```Mermaid
+classDiagram
+    direction LR
+
+    %% ===== Core Player / Goose =====
+    class GooseMovement {
+        +moveSpeed
+        +runMultiplier
+        +OnGroundTouch(Vector3)
+    }
+
+    class GooseDrag {
+        +TryGrab()
+        +Release()
+        +IsDragging() bool
+        +GetGrabbedRigidbody() Rigidbody
+        +GetDraggedWeight() float
+    }
+
+    class GooseHeadLook {
+        +turnSpeed
+        +maxYaw
+        +maxPitch
+    }
+
+    GooseMovement --> GooseDrag : reads drag weight
+    GooseHeadLook --> GooseDrag : queries dragged object
+
+    %% ===== Dragging System =====
+    class DraggableObject {
+        +dragWeight
+        +maxDragDistance
+        +StartDragging()
+        +StopDragging()
+    }
+
+    GooseDrag --> DraggableObject : controls
+    DraggableObject --> ContinuousInteractionAudio : plays loop
+
+    %% ===== Carry System =====
+    class PlayerCarry {
+        +TryPickUp()
+        +Drop()
+    }
+
+    class CarryableObject {
+        +carryWeight
+        +OnPickup()
+        +OnDrop()
+    }
+
+    PlayerCarry --> CarryableObject : picks up / drops
+    CarryableObject --> AudioSource : carry audio loop
+
+    %% ===== Audio Components =====
+    class AudioPlayer {
+        +PlaySound()
+    }
+
+    class CarryAudio {
+        +StartCarryAudio()
+        +StopCarryAudio()
+    }
+
+    class ConstantAudio {
+        +Play()
+    }
+
+    class ContinuousInteractionAudio {
+        +StartLoop()
+        +StopLoop()
+    }
+
+    class InteractionAudioCue {
+        +PlayOnce()
+    }
+
+    class MovementAudio {
+        +PlayMovementSound()
+        +StopMovementSound()
+    }
+
+    MovementAudio --> NavMeshAgent : checks velocity
+    MovementAudio --> AudioSource
+
+    %% ===== Camera =====
+    class CameraFollow {
+        +positionOffset
+        +followSpeed
+    }
+
+    class CameraFollowAnchor {
+        +smoothTime
+    }
+
+    class CameraZoom {
+        +minZoom
+        +maxZoom
+    }
+
+    class FixedAngleCamera {
+        +offset
+        +zoomSpeed
+    }
+
+    CameraFollow --> Transform : follows player
+    CameraFollowAnchor --> NavMeshAgent
+    FixedAngleCamera --> Transform : looks at player
+
+    %% ===== Unity Components =====
+    class AudioSource
+    class NavMeshAgent
+    class Animator
+    class Rigidbody
+
+    GooseMovement --> NavMeshAgent
+    GooseMovement --> Animator
+    GooseDrag --> Rigidbody
+    DraggableObject --> Rigidbody
+
